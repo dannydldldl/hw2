@@ -66,16 +66,13 @@ namespace WebRole1
             using (StreamReader sr = new StreamReader(path))
             {
                 int counter = 0;
-                int counter1 = 0;
-                float am = memProcess.NextValue();
-                float ava = am - 700;
+                float am = memProcess.NextValue(); //assume 1GB memory
+                float reserveMemory = am - 950;
                 while (sr.EndOfStream == false)
                 {
-                    counter++;
-                    counter1++;
-                    if (counter >= 5000)
+                    if (counter >= 1000)
                     {
-                        if (memProcess.NextValue() < ava)
+                        if (memProcess.NextValue() < reserveMemory)
                         {
                             sr.Close();
                             return;
@@ -95,15 +92,6 @@ namespace WebRole1
         public String[] search(String s)
         {
             return trie.SearchForPrefix(s).ToArray();
-        }
-
-
-        //returns available memory
-        [WebMethod]
-        public float AvailableMemory()
-        {
-            float memUsage = memProcess.NextValue();
-            return memUsage;
         }
 
 
