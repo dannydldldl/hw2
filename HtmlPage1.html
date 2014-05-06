@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+    <form>
+        Type something: <input type="text" id="input">
+    </form>
+    <a href="http://info344hw2.cloudapp.net/webservice1.asmx/DownloadFileFromBlobToDisk">Click it when no output, JUST IN CASE for reactivate memory.</a>
+    <div id="result">
+    </div>
+
+    <script type="text/javascript">
+        $("#input").keyup(function () {
+            var input = $(this).val();
+            input = input.trim();
+            input = input.toLowerCase();
+            $.ajax({
+                type: "POST",
+                url: "webservice1.asmx/search",
+                data: '{s: "' + input + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                success: function (msg) {
+                    var data = eval("(" + msg + ")");
+                    $('#result').html(data[0] + '<br/>');
+                    $('#result').html(data + '<br/>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
